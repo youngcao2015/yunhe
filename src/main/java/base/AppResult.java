@@ -11,7 +11,7 @@ package base;
 
 public class AppResult<T> {
 
-	private boolean success;// 是否成功
+	private boolean status;// 是否成功
 
 	private String message;// 消息
 
@@ -21,12 +21,12 @@ public class AppResult<T> {
 
 	private long total;// 数量
 
-	public boolean isSuccess() {
-		return success;
+	public boolean isStatus() {
+		return status;
 	}
 
-	public void setSuccess(boolean success) {
-		this.success = success;
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 
 	public String getCode() {

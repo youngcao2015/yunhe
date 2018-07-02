@@ -16,7 +16,7 @@ public class AppResultBuilder {
 		result.setTotal(count);
 		result.setCode(code);
 		result.setData(t);
-		result.setSuccess(true);
+		result.setStatus(true);
 		return result;
 	}
 
@@ -54,7 +54,7 @@ public class AppResultBuilder {
 		result.setTotal(count);
 		result.setMessage(message);
 		result.setData(t);
-		result.setSuccess(true);
+		result.setStatus(true);
 		return result;
 	}
 
