@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="configProperties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:jdbc.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 配置数据源 -->
+   <!-- <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${jdbc.driverClassName}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="minPoolSize" value="${c3p0.minPoolSize}"/>
+        <property name="acquireIncrement" value="${c3p0.acquireIncrement}"/>
+        <property name="acquireRetryAttempts" value="${c3p0.acquireRetryAttempts}"/>
+        <property name="acquireRetryDelay" value="${c3p0.acquireRetryDelay}"/>
+        <property name="autoCommitOnClose" value="${c3p0.autoCommitOnClose}"/>
+        <property name="checkoutTimeout" value="${c3p0.checkoutTimeout}"/>
+        <property name="idleConnectionTestPeriod" value="${c3p0.idleConnectionTestPeriod}"/>
+        <property name="maxIdleTime" value="${c3p0.maxIdleTime}"/>
+        <property name="testConnectionOnCheckin" value="${c3p0.testConnectionOnCheckin}"/>
+        <property name="maxStatements" value="${c3p0.maxStatements}"/>
+        <property name="maxStatementsPerConnection" value="${c3p0.maxStatementsPerConnection}"/>
+        <property name="unreturnedConnectionTimeout" value="${c3p0.unreturnedConnectionTimeout}"/>
+    </bean>-->
+
+    <!-- Druid方式配置数据源 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+
+        <!-- 基本属性 url、user、password -->
+        <property name="driverClassName" value="${jdbc.driverClassName}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="10" />
+        <property name="minIdle" value="20" />
+        <property name="maxActive" value="100" />
+
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000" />
+
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="6000" />
+
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+
+        <!-- 验证是否回收 -->
+        <property name="validationQuery" value="SELECT 'x' FROM DUAL" />
+        <property name="testWhileIdle" value="true" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+
+        <!-- 开启Druid的监控统计功能 -->
+        <property name="filters" value="stat" />
+    </bean>
+
+    <!-- 配置mybatisSqlSessionFactoryBean -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+    </bean>
+    <!-- 配置mybatis mapper接口 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+</beans>
