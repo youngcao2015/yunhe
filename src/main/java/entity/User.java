@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Date;
+
 /**
  * @descripthion:
  * @author: Young Cao
@@ -16,6 +18,24 @@ public class User {
     private String sex;
     private String imei;
     private String huanxinAccount;
+    private Date createTime;
+    private Date updateTime;
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
     public Long getId() {
         return id;

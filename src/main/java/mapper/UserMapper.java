@@ -1,6 +1,7 @@
 package mapper;
 
 import entity.User;
+import entity.UserAuth;
 
 /**
  * @descripthion:
@@ -9,4 +10,7 @@ import entity.User;
  */
 public interface UserMapper {
     public User findUser(User user) throws Exception;
+    public int insertUserAuth(UserAuth userAuth) throws Exception;
+    public int insertUser(User user) throws Exception;
+    public int updateUser(User user) throws Exception;
 }

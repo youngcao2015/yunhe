@@ -7,9 +7,10 @@
         <result column="invitation_code" property="invitationCode"/>
         <result column="huanxin_account" property="huanxinAccount"/>
     </resultMap>
-    <sql id="Base_Column_List">
-        id, name, sex
-    </sql>
+
+    <!--<sql id="Base_Column_List">-->
+        <!--id, name, sex-->
+    <!--</sql>-->
 
     <!--用户登录-->
     <select id="findUser" parameterType="entity.User" resultMap="BaseResultMap">
@@ -17,12 +18,25 @@
         from user
         where phone_num = #{phoneNum} AND password = #{password}
     </select>
+    <insert id="insertUserAuth" parameterType="entity.UserAuth">
+        insert into user_auth (user_id, username, phone_num, sex,
+        nickname, imei, login_type, openid, token, create_time)
+        values (#{userId}, #{username}, #{phoneNum},
+         #{sex}, #{nickname}, #{imei}, #{loginType},
+         #{openid}, #{token}, #{createTime})
+    </insert>
 
     <!--用户注册-->
-    <insert id="insert" parameterType="entity.User">
-        insert into student (id, name, age,
-        classId)
-        values (#{id}, #{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER},
-        #{classId,jdbcType=INTEGER})
+    <insert id="insertUser" parameterType="entity.User">
+        insert into user (username, phone_num, sex,
+        nickname, password, invitation_code, avatar, imei, huanxin_account, create_time)
+        values (#{username}, #{phoneNum}, #{sex}, #{nickname}, #{password}, #{invitationCode},
+         #{avatar}, #{imei}, #{huanxinAccount}, #{createTime})
     </insert>
+
+    <!--更新用户信息-->
+    <update id="updateUser" parameterType="entity.User">
+        update user set nickname = #{nickname}, avatar = #{avatar},
+        update_time = #{updateTime} WHERE id = #{id}
+    </update>
 </mapper>
