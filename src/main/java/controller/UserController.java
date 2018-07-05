@@ -47,27 +47,26 @@ public class UserController {
         paramUser.setPassword(password);
         User resultUser = userService.findUser(paramUser);
 
-        if (resultUser != null) {
-            // 更新登录信息，只是服务端保存
-            UserAuth userAuth = new UserAuth();
-            userAuth.setUserId(resultUser.getId());
-            userAuth.setUsername(resultUser.getUsername());
-            userAuth.setPhoneNum(resultUser.getPhoneNum());
-            userAuth.setSex(resultUser.getSex());
-            userAuth.setNickname(resultUser.getNickname());
-            Date date = new Date();
-            userAuth.setCreateTime(date);
-            int result = userService.insertUserAuth(userAuth);
-            if (result <= 0) return AppResultBuilder.buildFailedMessageResult(ResultStringUtil.LOGIN_FAIL);
+        if (resultUser == null) return AppResultBuilder.buildFailedMessageResult(ResultStringUtil.LOGIN_FAIL);
 
-            // session 设置
-            httpSession.setAttribute(id, resultUser.getId());
-            httpSession.setAttribute(loginTime, date);
+        // 更新登录信息，只是服务端保存
+        UserAuth userAuth = new UserAuth();
+        userAuth.setUserId(resultUser.getId());
+        userAuth.setUsername(resultUser.getUsername());
+        userAuth.setPhoneNum(resultUser.getPhoneNum());
+        userAuth.setSex(resultUser.getSex());
+        userAuth.setNickname(resultUser.getNickname());
+        Date date = new Date();
+        userAuth.setCreateTime(date);
+        int result = userService.insertUserAuth(userAuth);
+        if (result <= 0) return AppResultBuilder.buildFailedMessageResult(ResultStringUtil.LOGIN_FAIL);
 
-            // 返回用户信息
-            return AppResultBuilder.buildSuccessMessageResult(resultUser, ResultStringUtil.LOGIN_SUCCESS);
-        }
-        return AppResultBuilder.buildFailedMessageResult(ResultStringUtil.LOGIN_FAIL);
+        // session 设置
+        httpSession.setAttribute(id, resultUser.getId());
+        httpSession.setAttribute(loginTime, date);
+
+        // 返回用户信息
+        return AppResultBuilder.buildSuccessMessageResult(resultUser, ResultStringUtil.LOGIN_SUCCESS);
     }
 
     @GetMapping("/logout")
