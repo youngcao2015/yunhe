@@ -3,6 +3,9 @@ package controller;
 import base.AppResult;
 import base.AppResultBuilder;
 import base.ResultStringUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonObject;
 import entity.User;
 import entity.UserAuth;
 import org.apache.logging.log4j.LogManager;
@@ -12,6 +15,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 import service.IUserService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 
@@ -19,6 +24,8 @@ import java.util.Date;
 @RequestMapping("/user")
 public class UserController {
     private static final Logger logger = LogManager.getLogger(UserController.class.getName());
+    private static final String id = "id";
+    private static final String loginTime = "loginTime";
 
     @Autowired
     @Qualifier("userService")
@@ -28,17 +35,18 @@ public class UserController {
      * 用户登录
      *
      * @param phone_num 手机号码
-     * @param password 密码
+     * @param password  密码
      * @return 用户信息
      * @throws Exception 系统异常
      */
     @GetMapping("/sign_in")
     public AppResult<User> signIn(@RequestParam("phone_num") Long phone_num,
-                                  @RequestParam("password") String password) throws Exception {
+                                  @RequestParam("password") String password, HttpSession httpSession) throws Exception {
         User paramUser = new User();
         paramUser.setPhoneNum(phone_num);
         paramUser.setPassword(password);
         User resultUser = userService.findUser(paramUser);
+
         if (resultUser != null) {
             // 更新登录信息，只是服务端保存
             UserAuth userAuth = new UserAuth();
@@ -47,14 +55,24 @@ public class UserController {
             userAuth.setPhoneNum(resultUser.getPhoneNum());
             userAuth.setSex(resultUser.getSex());
             userAuth.setNickname(resultUser.getNickname());
-            userAuth.setCreateTime(new Date());
+            Date date = new Date();
+            userAuth.setCreateTime(date);
             int result = userService.insertUserAuth(userAuth);
             if (result <= 0) return AppResultBuilder.buildFailedMessageResult(ResultStringUtil.LOGIN_FAIL);
+
+            // session 设置
+            httpSession.setAttribute(id, resultUser.getId());
+            httpSession.setAttribute(loginTime, date);
 
             // 返回用户信息
             return AppResultBuilder.buildSuccessMessageResult(resultUser, ResultStringUtil.LOGIN_SUCCESS);
         }
         return AppResultBuilder.buildFailedMessageResult(ResultStringUtil.LOGIN_FAIL);
+    }
+
+    @GetMapping("/logout")
+    public void logout(HttpSession httpSession) {
+        httpSession.invalidate();
     }
 
     /**
@@ -79,11 +97,16 @@ public class UserController {
      * @return 用户信息
      * @throws Exception 系统异常
      */
-    @PostMapping("/update_user")
-    public AppResult<User> updateUser(@RequestBody User user) throws Exception {
+    @PostMapping("/update")
+    public AppResult<User> updateUser(@RequestBody User user, HttpSession httpSession) throws Exception {
+        // 通过session来确认用户身份
+        Long userId = (Long) httpSession.getAttribute(id);
+        if (userId == null) return AppResultBuilder.buildFailedMessageResult(ResultStringUtil.MODIFY_USER_FAIL);
+
         user.setUpdateTime(new Date());
+        user.setId(userId);
         int result = userService.updateUser(user);
         if (result <= 0) return AppResultBuilder.buildFailedMessageResult(ResultStringUtil.MODIFY_USER_FAIL);
-        return AppResultBuilder.buildSuccessMessageResult(user, ResultStringUtil.MODIFY_USER_SUCCESS);
+        return AppResultBuilder.buildSuccessMessageResult(ResultStringUtil.MODIFY_USER_SUCCESS);
     }
 }

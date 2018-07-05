@@ -19,6 +19,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <log4j2.version>2.11.0</log4j2.version>
         <commons-lang3.version>3.7</commons-lang3.version>
+        <servlet-api.version>4.0.1</servlet-api.version>
     </properties>
 
     <dependencies>
@@ -56,6 +57,38 @@
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
         </dependency>
+
+        <!-- Jedis -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        <!-- Spring Data Redis -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+            <version>1.7.3.RELEASE</version>
+        </dependency>
+        <!-- Spring Session -->
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session</artifactId>
+            <version>1.2.2.RELEASE</version>
+        </dependency>
+        <!-- Apache Commons Pool -->
+        <!--<dependency>-->
+            <!--<groupId>org.apache.commons</groupId>-->
+            <!--<artifactId>commons-pool2</artifactId>-->
+            <!--<version>2.4.2</version>-->
+        <!--</dependency>-->
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${servlet-api.version}</version>
+        </dependency>
+
 
         <!--Unit Test - 单元测试-->
         <dependency>

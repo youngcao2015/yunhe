@@ -9,7 +9,7 @@
     </resultMap>
 
     <!--<sql id="Base_Column_List">-->
-        <!--id, name, sex-->
+    <!--id, name, sex-->
     <!--</sql>-->
 
     <!--用户登录-->
@@ -36,7 +36,16 @@
 
     <!--更新用户信息-->
     <update id="updateUser" parameterType="entity.User">
-        update user set nickname = #{nickname}, avatar = #{avatar},
-        update_time = #{updateTime} WHERE id = #{id}
+        update user
+        <set>
+            <if test="nickname != null">
+                nickname = #{nickname},
+            </if>
+            <if test="avatar != null">
+                avatar = #{avatar},
+            </if>
+            update_time = #{updateTime}
+        </set>
+        WHERE id = #{id}
     </update>
 </mapper>

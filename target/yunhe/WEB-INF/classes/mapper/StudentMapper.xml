@@ -78,21 +78,21 @@
             <!--</if>-->
         <!--</trim>-->
     <!--</insert>-->
-    <!--<update id="updateByPrimaryKeySelective" parameterType="entity.Student">-->
-        <!--update student-->
-        <!--<set>-->
-            <!--<if test="name != null">-->
-                <!--Name = #{name,jdbcType=VARCHAR},-->
-            <!--</if>-->
-            <!--<if test="age != null">-->
-                <!--Age = #{age,jdbcType=INTEGER},-->
-            <!--</if>-->
-            <!--<if test="classId != null">-->
-                <!--ClassId = #{classId,jdbcType=INTEGER},-->
-            <!--</if>-->
-        <!--</set>-->
-        <!--where id = #{id}-->
-    <!--</update>-->
+    <update id="updateByPrimaryKeySelective" parameterType="entity.Student">
+        update student
+        <set>
+            <if test="name != null">
+                Name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null">
+                Age = #{age,jdbcType=INTEGER},
+            </if>
+            <if test="classId != null">
+                ClassId = #{classId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
     <!--<update id="updateByPrimaryKey" parameterType="entity.Student">-->
              <!--update student-->
              <!--set Name = #{name,jdbcType=VARCHAR},-->
