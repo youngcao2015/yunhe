@@ -44,7 +44,9 @@
             <if test="avatar != null">
                 avatar = #{avatar},
             </if>
-            update_time = #{updateTime}
+            <if test="updateTime != null">
+                update_time = #{updateTime}
+            </if>
         </set>
         WHERE id = #{id}
     </update>

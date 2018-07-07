@@ -3,9 +3,6 @@ package controller;
 import base.AppResult;
 import base.AppResultBuilder;
 import base.ResultStringUtil;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.google.gson.JsonObject;
 import entity.User;
 import entity.UserAuth;
 import org.apache.logging.log4j.LogManager;
@@ -15,7 +12,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 import service.IUserService;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 
@@ -102,8 +98,8 @@ public class UserController {
         Long userId = (Long) httpSession.getAttribute(id);
         if (userId == null) return AppResultBuilder.buildFailedMessageResult(ResultStringUtil.MODIFY_USER_FAIL);
 
-        user.setUpdateTime(new Date());
         user.setId(userId);
+        user.setUpdateTime(new Date());
         int result = userService.updateUser(user);
         if (result <= 0) return AppResultBuilder.buildFailedMessageResult(ResultStringUtil.MODIFY_USER_FAIL);
         return AppResultBuilder.buildSuccessMessageResult(ResultStringUtil.MODIFY_USER_SUCCESS);

@@ -14,7 +14,7 @@
 <body>
 <h2 style="text-align: center">云合珠宝图片上传测试</h2>
 <div style="text-align: center;vertical-align: center">
-    <a href="jsp/upload.jsp" style="font-size: 20px">进入上传图片页面</a>
+    <a href="jsp/uploadImg.jsp" style="font-size: 20px">进入上传图片页面</a>
 </div>
 
 </body>
