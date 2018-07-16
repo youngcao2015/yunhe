@@ -14,70 +14,70 @@
     <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from student
+        from yunhe.student
         where id = #{id}
     </select>
-    <!--<select id="selectByCondition" parameterType="entity.Student" resultMap="BaseResultMap">-->
-        <!--SELECT-->
-        <!--<include refid="Base_Column_List"/>-->
-        <!--from student-->
-        <!--<where>-->
-            <!--1=1-->
-            <!--<if test="id != null">-->
-                <!--and id=#{id}-->
-            <!--</if>id-->
-            <!--<if test="name != null">-->
-                <!--and Name=#{name,jdbcType=VARCHAR}-->
-            <!--</if>-->
-            <!--<if test="age != null">-->
-                <!--and Age=#{age,jdbcType=INTEGER}-->
-            <!--</if>-->
-            <!--<if test="classId != null">-->
-                <!--and ClassId=#{classId,jdbcType=INTEGER}-->
-            <!--</if>-->
-        <!--</where>-->
-    <!--</select>-->
-    <!--<delete id="deleteByPrimaryKey" parameterType="byte[]">-->
-             <!--delete from student-->
-             <!--where id = #{id}-->
-         <!--</delete>-->
+    <select id="selectByCondition" parameterType="entity.Student" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from student
+        <where>
+            1=1
+            <if test="id != null">
+                and id=#{id}
+            </if>id
+            <if test="name != null">
+                and Name=#{name,jdbcType=VARCHAR}
+            </if>
+            <if test="age != null">
+                and Age=#{age,jdbcType=INTEGER}
+            </if>
+            <if test="classId != null">
+                and ClassId=#{classId,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="byte[]">
+             delete from student
+             where id = #{id}
+         </delete>
     <insert id="insert" parameterType="entity.Student">
              insert into student (id, name, age,
             classId)
              values (#{id}, #{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER},
              #{classId,jdbcType=INTEGER})
          </insert>
-    <!--<insert id="insertSelective" parameterType="entity.Student">-->
-        <!--insert into student-->
-        <!--<trim prefix="(" suffix=")" suffixOverrides=",">-->
-            <!--<if test="id != null">-->
-                <!--id,-->
-            <!--</if>-->
-            <!--<if test="name != null">-->
-                <!--Name,-->
-            <!--</if>-->
-            <!--<if test="age != null">-->
-                <!--Age,-->
-            <!--</if>-->
-            <!--<if test="classId != null">-->
-                <!--ClassId,-->
-            <!--</if>-->
-        <!--</trim>-->
-        <!--<trim prefix="values (" suffix=")" suffixOverrides=",">-->
-            <!--<if test="id != null">-->
-                <!--#{id},-->
-            <!--</if>-->
-            <!--<if test="name != null">-->
-                <!--#{name,jdbcType=VARCHAR},-->
-            <!--</if>-->
-            <!--<if test="age != null">-->
-                <!--#{age,jdbcType=INTEGER},-->
-            <!--</if>-->
-            <!--<if test="classId != null">-->
-                <!--#{classId,jdbcType=INTEGER},-->
-            <!--</if>-->
-        <!--</trim>-->
-    <!--</insert>-->
+    <insert id="insertSelective" parameterType="entity.Student">
+        insert into student
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                Name,
+            </if>
+            <if test="age != null">
+                Age,
+            </if>
+            <if test="classId != null">
+                ClassId,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null">
+                #{age,jdbcType=INTEGER},
+            </if>
+            <if test="classId != null">
+                #{classId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
     <update id="updateByPrimaryKeySelective" parameterType="entity.Student">
         update student
         <set>
@@ -93,11 +93,11 @@
         </set>
         where id = #{id}
     </update>
-    <!--<update id="updateByPrimaryKey" parameterType="entity.Student">-->
-             <!--update student-->
-             <!--set Name = #{name,jdbcType=VARCHAR},-->
-             <!--Age = #{age,jdbcType=INTEGER},-->
-             <!--ClassId = #{classId,jdbcType=INTEGER}-->
-             <!--where id = #{id}-->
-         <!--</update>-->
+    <update id="updateByPrimaryKey" parameterType="entity.Student">
+             update student
+             set Name = #{name,jdbcType=VARCHAR},
+             Age = #{age,jdbcType=INTEGER},
+             ClassId = #{classId,jdbcType=INTEGER}
+             where id = #{id}
+         </update>
 </mapper>

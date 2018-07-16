@@ -65,6 +65,11 @@ public class UserController {
         return AppResultBuilder.buildSuccessMessageResult(resultUser, ResultStringUtil.LOGIN_SUCCESS);
     }
 
+    /**
+     * 用户退出登录
+     *
+     * @param httpSession 该用户的session
+     */
     @GetMapping("/logout")
     public void logout(HttpSession httpSession) {
         httpSession.invalidate();

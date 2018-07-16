@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import service.IUserService;
 
@@ -25,7 +27,8 @@ import java.util.Date;
  * @author: Young Cao
  * @date: 下午4:52 18/7/5
  */
-@Controller
+@RestController
+@RequestMapping("/user")
 public class FileUploadController {
     private static final Logger logger = LogManager.getLogger(FileUploadController.class.getName());
 
@@ -37,15 +40,11 @@ public class FileUploadController {
     @PostMapping("/upload")
     public AppResult<User> upload(@RequestParam("file") MultipartFile file,
                                   HttpServletRequest request, HttpSession httpSession) throws Exception {
-        String img_url = FileUploadUtil.imageUpload(file, request);
-        logger.info("=========");
-        logger.info(img_url);
-        logger.info("=========");
-
         // 通过session来确认用户身份
         Long userId = (Long) httpSession.getAttribute("id");
         if (userId == null) return AppResultBuilder.buildFailedMessageResult(ResultStringUtil.MODIFY_USER_FAIL);
 
+        String img_url = FileUploadUtil.imageUpload(file, request);
         User user = new User();
         user.setId(userId);
         user.setUpdateTime(new Date());

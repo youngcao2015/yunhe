@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.GoodsMapper">
+    <resultMap id="category" type="entity.GoodsCategory">
+        <id column="category_level1_id" property="id"/>
+        <result column="category_level1_name" property="name"/>
+        <collection property="subcategories" ofType="entity.GoodsCategory">
+            <id column="category_level2_id" property="id"/>
+            <result column="category_level2_name" property="name"/>
+            <collection property="subcategories" ofType="entity.GoodsCategory">
+                <id column="category_level3_id" property="id"/>
+                <result column="category_level3_name" property="name"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <resultMap id="goodsItem" type="entity.GoodsItem">
+        <id column="id" property="id"/>
+        <result column="goods_id" property="goodsId"/>
+        <result column="goods_name" property="goodsName"/>
+        <result column="watch_frame" property="watchFrame"/>
+        <result column="original_price" property="originalPrice"/>
+        <result column="bargain_price" property="bargainPrice"/>
+        <result column="allow_returned" property="allowReturned"/>
+        <result column="available_count" property="availableCount"/>
+        <result column="discount_remain_time" property="discountRemainTime"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="findGoodsCategory" resultMap="category">
+        SELECT
+            category_level1.id   AS category_level1_id,
+            category_level1.name AS category_level1_name,
+            category_level2.id   AS category_level2_id,
+            category_level2.name AS category_level2_name,
+            category_level3.id   AS category_level3_id,
+            category_level3.name AS category_level3_name
+        FROM yunhe.mall_goods_category category_level1
+            INNER JOIN yunhe.mall_goods_category category_level2 ON category_level1.id = category_level2.parent_id
+            INNER JOIN yunhe.mall_goods_category category_level3 ON category_level2.id = category_level3.parent_id;
+    </select>
+
+    <select id="findGoodsItem" parameterType="entity.GoodsItemParam" resultMap="goodsItem">
+       SELECT * FROM yunhe.mall_goods_item a
+       WHERE id IN
+       (SELECT goods_item_id FROM yunhe.mall_goods_category_and_goods_item b
+          WHERE b.goods_name LIKE concat('%', #{wd}, '%')
+          OR b.goods_item_name LIKE concat('%', #{wd}, '%')
+          OR category_level1_name LIKE concat('%', #{wd}, '%')
+          OR category_level2_name LIKE concat('%', #{wd}, '%')
+          OR category_level3_name LIKE concat('%', #{wd}, '%'))
+          <if test="type == 'latest'">
+              ORDER BY a.create_time DESC;
+          </if>
+          <if test="type == 'priceDESC'">
+            ORDER BY a.price DESC;
+          </if>
+          <if test="type == 'priceASC'">
+            ORDER BY a.price ASC;
+          </if>
+    </select>
+
+    <select id="findPopularGoodsItem" parameterType="entity.GoodsItemParam" resultMap="goodsItem">
+
+    </select>
+</mapper>
