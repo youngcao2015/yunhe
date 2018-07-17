@@ -41,27 +41,41 @@
             INNER JOIN yunhe.mall_goods_category category_level3 ON category_level2.id = category_level3.parent_id;
     </select>
 
-    <select id="findGoodsItem" parameterType="entity.GoodsItemParam" resultMap="goodsItem">
-       SELECT * FROM yunhe.mall_goods_item a
-       WHERE id IN
-       (SELECT goods_item_id FROM yunhe.mall_goods_category_and_goods_item b
-          WHERE b.goods_name LIKE concat('%', #{wd}, '%')
-          OR b.goods_item_name LIKE concat('%', #{wd}, '%')
-          OR category_level1_name LIKE concat('%', #{wd}, '%')
-          OR category_level2_name LIKE concat('%', #{wd}, '%')
-          OR category_level3_name LIKE concat('%', #{wd}, '%'))
-          <if test="type == 'latest'">
-              ORDER BY a.create_time DESC;
-          </if>
-          <if test="type == 'priceDESC'">
-            ORDER BY a.price DESC;
-          </if>
-          <if test="type == 'priceASC'">
-            ORDER BY a.price ASC;
-          </if>
+    <select id="findGoodsItemList" parameterType="entity.GoodsItemParam" resultMap="goodsItem">
+        SELECT * FROM yunhe.mall_goods_item a
+        WHERE id IN
+        (SELECT t.goods_item_id FROM (SELECT goods_item_id FROM yunhe.mall_goods_category_and_goods_item b
+        WHERE b.goods_name LIKE concat('%', #{wd}, '%')
+        OR b.goods_item_name LIKE concat('%', #{wd}, '%')
+        OR category_level1_name LIKE concat('%', #{wd}, '%')
+        OR category_level2_name LIKE concat('%', #{wd}, '%')
+        OR category_level3_name LIKE concat('%', #{wd}, '%') limit 0, 20) as t)
+        <if test="type == 'latest'">
+            ORDER BY a.create_time DESC
+        </if>
+        <if test="type == 'priceDESC'">
+            ORDER BY a.price DESC
+        </if>
+        <if test="type == 'priceASC'">
+            ORDER BY a.price ASC
+        </if>
     </select>
 
-    <select id="findPopularGoodsItem" parameterType="entity.GoodsItemParam" resultMap="goodsItem">
+    <select id="findGoodsItem" parameterType="entity.GoodsItem" resultMap="goodsItem">
+        SELECT *
+        FROM yunhe.mall_goods_item
+        WHERE id = #{id};
+    </select>
+
+    <insert id="insertGoodsItemCollection" parameterType="entity.GoodsItemCollection">
+        INSERT INTO yunhe.user_goods_item_collection
+        (user_id, goods_item_id, collected, create_time, update_time, goods_item_name, pic, price, `desc`, state)
+        (SELECT ${userId}, ${goodsItemId}, ${collected}, ${createTime}, ${updateTime}, goods_item_name, pic, price, `desc`, state
+        FROM yunhe.mall_goods_item
+         WHERE id = ${goodsItemId}));
+    </insert>
+
+    <select id="findPopularGoodsItemList" parameterType="entity.GoodsItemParam" resultMap="goodsItem">
 
     </select>
 </mapper>

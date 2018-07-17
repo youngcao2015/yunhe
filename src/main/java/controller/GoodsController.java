@@ -52,20 +52,38 @@ public class GoodsController {
      * @return 商品变体列表
      * @throws Exception .
      */
-    @GetMapping("/goods_item")
-    public AppResult<List<GoodsItem>> findGoodsItem(@RequestParam("wd") String wd, @RequestParam(required = false, name = "type") String type) throws Exception {
+    @GetMapping("/goods_list")
+    public AppResult<List<GoodsItem>> findGoodsItemList(@RequestParam("wd") String wd, @RequestParam(required = false, name = "type") String type) throws Exception {
         List<GoodsItem> goodsItems = null;
         GoodsItemParam param = new GoodsItemParam();
         param.setWd(wd);
         param.setType(type);
         if (type.equals("popular")) {
-            goodsItems = goodsService.findPopularGoodsItem(param);
+            goodsItems = goodsService.findPopularGoodsItemList(param);
         } else {
-            goodsItems = goodsService.findGoodsItem(param);
+            goodsItems = goodsService.findGoodsItemList(param);
         }
 
         if (goodsItems == null) AppResultBuilder.buildSuccessMessageResult(ResultStringUtil.NULL_DATA);
         return AppResultBuilder.buildSuccessMessageResult(goodsItems, ResultStringUtil.QUERY_SUCCESS);
+    }
+
+    /**
+     * 获取商品变体（商品详情）
+     *
+     * @param id 商品变体id
+     * @return 商品变体
+     * @throws Exception .
+     */
+    @GetMapping("/goods_detail")
+    public AppResult<GoodsItem> findGoodsItem(@RequestParam("id") Long id) throws Exception {
+        GoodsItem goodsItemParam = new GoodsItem();
+        goodsItemParam.setId(id);
+
+        GoodsItem goodsItem = goodsService.findGoodsItem(goodsItemParam);
+
+        if (goodsItem == null) AppResultBuilder.buildSuccessMessageResult(ResultStringUtil.NULL_DATA);
+        return AppResultBuilder.buildSuccessMessageResult(goodsItem, ResultStringUtil.QUERY_SUCCESS);
     }
 
     /**

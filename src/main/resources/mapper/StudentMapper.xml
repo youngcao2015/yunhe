@@ -94,7 +94,7 @@
         where id = #{id}
     </update>
     <update id="updateByPrimaryKey" parameterType="entity.Student">
-             update student
+             update yunhe.student
              set Name = #{name,jdbcType=VARCHAR},
              Age = #{age,jdbcType=INTEGER},
              ClassId = #{classId,jdbcType=INTEGER}

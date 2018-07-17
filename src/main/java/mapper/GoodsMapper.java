@@ -12,6 +12,8 @@ import java.util.List;
 public interface GoodsMapper {
     public List<GoodsCategory> findGoodsCategory() throws Exception;
     public List<GoodsCatFeature> findGoodsCatFeature() throws Exception;
-    public List<GoodsItem> findGoodsItem(GoodsItemParam param) throws Exception;
-    public List<GoodsItem> findPopularGoodsItem(GoodsItemParam param) throws Exception;
+    public GoodsItem findGoodsItem(GoodsItem item) throws Exception;
+    public int insertGoodsItemCollection(GoodsItemCollection item) throws Exception;
+    public List<GoodsItem> findGoodsItemList(GoodsItemParam param) throws Exception;
+    public List<GoodsItem> findPopularGoodsItemList(GoodsItemParam param) throws Exception;
 }

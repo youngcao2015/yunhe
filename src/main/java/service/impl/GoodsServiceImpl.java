@@ -1,9 +1,6 @@
 package service.impl;
 
-import entity.GoodsCatFeature;
-import entity.GoodsCategory;
-import entity.GoodsItem;
-import entity.GoodsItemParam;
+import entity.*;
 import mapper.GoodsMapper;
 import org.springframework.stereotype.Service;
 import service.IGoodsService;
@@ -32,12 +29,22 @@ public class GoodsServiceImpl implements IGoodsService {
     }
 
     @Override
-    public List<GoodsItem> findGoodsItem(GoodsItemParam param) throws Exception {
-        return goodsMapper.findGoodsItem(param);
+    public GoodsItem findGoodsItem(GoodsItem item) throws Exception {
+        return goodsMapper.findGoodsItem(item);
     }
 
     @Override
-    public List<GoodsItem> findPopularGoodsItem(GoodsItemParam param) throws Exception {
-        return goodsMapper.findPopularGoodsItem(param);
+    public int insertGoodsItemCollection(GoodsItemCollection item) throws Exception {
+        return goodsMapper.insertGoodsItemCollection(item);
+    }
+
+    @Override
+    public List<GoodsItem> findGoodsItemList(GoodsItemParam param) throws Exception {
+        return goodsMapper.findGoodsItemList(param);
+    }
+
+    @Override
+    public List<GoodsItem> findPopularGoodsItemList(GoodsItemParam param) throws Exception {
+        return goodsMapper.findPopularGoodsItemList(param);
     }
 }

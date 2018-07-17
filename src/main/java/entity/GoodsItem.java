@@ -27,8 +27,26 @@ public class GoodsItem {
     private Boolean allowReturned;
     private Long availableCount;
     private Date discountRemainTime;
+    private String desc;
+    private String state;
     private Date createTime;
     private Date updateTime;
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 
     public Date getCreateTime() {
         return createTime;

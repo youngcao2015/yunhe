@@ -15,11 +15,11 @@
     <!--用户登录-->
     <select id="findUser" parameterType="entity.User" resultMap="BaseResultMap">
         select *
-        from user
+        from yunhe.user
         where phone_num = #{phoneNum} AND password = #{password}
     </select>
     <insert id="insertUserAuth" parameterType="entity.UserAuth">
-        insert into user_auth (user_id, username, phone_num, sex,
+        insert into yunhe.user_auth (user_id, username, phone_num, sex,
         nickname, imei, login_type, openid, token, create_time)
         values (#{userId}, #{username}, #{phoneNum},
          #{sex}, #{nickname}, #{imei}, #{loginType},
