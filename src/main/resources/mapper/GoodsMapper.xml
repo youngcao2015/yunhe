@@ -70,9 +70,8 @@
     <insert id="insertGoodsItemCollection" parameterType="entity.GoodsItemCollection">
         INSERT INTO yunhe.user_goods_item_collection
         (user_id, goods_item_id, collected, create_time, update_time, goods_item_name, pic, price, `desc`, state)
-        (SELECT ${userId}, ${goodsItemId}, ${collected}, ${createTime}, ${updateTime}, goods_item_name, pic, price, `desc`, state
-        FROM yunhe.mall_goods_item
-         WHERE id = ${goodsItemId}));
+        (SELECT #{userId}, #{goodsItemId}, #{collected}, #{createTime}, #{updateTime}, name, pic, price, `desc`, state
+        FROM yunhe.mall_goods_item WHERE id = #{goodsItemId});
     </insert>
 
     <select id="findPopularGoodsItemList" parameterType="entity.GoodsItemParam" resultMap="goodsItem">

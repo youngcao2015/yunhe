@@ -38,9 +38,10 @@
         </where>
     </select>
     <delete id="deleteByPrimaryKey" parameterType="byte[]">
-             delete from student
+             delete from yunhe.student
              where id = #{id}
-         </delete>
+    </delete>
+
     <insert id="insert" parameterType="entity.Student">
              insert into student (id, name, age,
             classId)
