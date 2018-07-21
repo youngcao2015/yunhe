@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.OrderMapper">
+    <resultMap id="order" type="entity.OrderDetail">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="order_id" property="orderId"/>
+        <result column="goods_item_id" property="goodsItemId"/>
+        <result column="order_number" property="orderNumber"/>
+        <result column="discount_price" property="discountPrice"/>
+        <result column="real_price" property="realPrice"/>
+        <result column="shipping_method" property="shippingMethod"/>
+        <result column="buyer_msg" property="buyerMsg"/>
+    </resultMap>
+
+    <select id="findOrder" parameterType="entity.OrderDetail" resultMap="order">
+        SELECT o.discount_amount, o.state, o.type, od.*
+        FROM yunhe.`order` o, yunhe.order_detail od
+        <where>
+            o.user_id = #{userId} AND o.id = od.order_id
+            <if test="number != null">
+                and o.number = #{number}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertOrder" parameterType="entity.OrderDetail">
+        INSERT INTO yunhe.`order` (user_id, number)
+        VALUES (#{userId}, #{number});
+
+        INSERT INTO order_detail (`count`, shipping_method, buyer_msg, goods_item_id, order_id, order_number,
+                          price, discount_price, real_price, pic, support, `desc`)
+        (SELECT #{count}, #{support}, #{buyerMsg}, #{goodsItemId}, (SELECT id FROM yunhe.`order` ORDER BY id DESC LIMIT 0, 1),
+         o.number, g.price, g.discount_price, g.discount_price - o.discount_amount, g.pic, (SELECT support FROM mall_goods WHERE mall_goods.id = g.goods_id), g.`desc`
+         FROM yunhe.`order` o, yunhe.mall_goods_item g
+         WHERE g.id = #{goodsItemId} AND o.id = (SELECT id FROM yunhe.`order` ORDER BY id DESC LIMIT 0, 1));
+    </insert>
+
+</mapper>

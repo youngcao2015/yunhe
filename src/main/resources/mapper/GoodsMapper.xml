@@ -20,7 +20,7 @@
         <result column="goods_name" property="goodsName"/>
         <result column="watch_frame" property="watchFrame"/>
         <result column="original_price" property="originalPrice"/>
-        <result column="bargain_price" property="bargainPrice"/>
+        <result column="bargain_price" property="discountPrice"/>
         <result column="allow_returned" property="allowReturned"/>
         <result column="available_count" property="availableCount"/>
         <result column="discount_remain_time" property="discountRemainTime"/>

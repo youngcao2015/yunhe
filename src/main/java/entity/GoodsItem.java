@@ -22,7 +22,7 @@ public class GoodsItem {
     private String shape;
     private BigDecimal originalPrice;
     private BigDecimal price;
-    private BigDecimal bargainPrice;
+    private BigDecimal discountPrice;
     private Boolean available;
     private Boolean allowReturned;
     private Long availableCount;
@@ -168,12 +168,12 @@ public class GoodsItem {
         this.price = price;
     }
 
-    public BigDecimal getBargainPrice() {
-        return bargainPrice;
+    public BigDecimal getDiscountPrice() {
+        return discountPrice;
     }
 
-    public void setBargainPrice(BigDecimal bargainPrice) {
-        this.bargainPrice = bargainPrice;
+    public void setDiscountPrice(BigDecimal discountPrice) {
+        this.discountPrice = discountPrice;
     }
 
     public Boolean getAvailable() {
