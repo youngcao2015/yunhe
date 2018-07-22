@@ -41,7 +41,7 @@
             INNER JOIN yunhe.mall_goods_category category_level3 ON category_level2.id = category_level3.parent_id;
     </select>
 
-    <select id="findGoodsItemList" parameterType="entity.GoodsItemParam" resultMap="goodsItem">
+    <select id="findGoodsItemList" parameterType="bean.GoodsItemParam" resultMap="goodsItem">
         SELECT * FROM yunhe.mall_goods_item a
         WHERE id IN
         (SELECT t.goods_item_id FROM (SELECT goods_item_id FROM yunhe.mall_goods_category_and_goods_item b
@@ -74,7 +74,7 @@
         FROM yunhe.mall_goods_item WHERE id = #{goodsItemId});
     </insert>
 
-    <select id="findPopularGoodsItemList" parameterType="entity.GoodsItemParam" resultMap="goodsItem">
+    <select id="findPopularGoodsItemList" parameterType="bean.GoodsItemParam" resultMap="goodsItem">
 
     </select>
 </mapper>

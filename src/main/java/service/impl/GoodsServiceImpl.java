@@ -1,5 +1,6 @@
 package service.impl;
 
+import bean.GoodsItemParam;
 import entity.*;
 import mapper.GoodsMapper;
 import org.springframework.stereotype.Service;

@@ -1,5 +1,6 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
  * @author: Young Cao
  * @date: 下午11:51 18/7/7
  */
-public class GoodsCategory {
+public class GoodsCategory implements Serializable {
     private Long id;
     private String name;
     private Long parentId;

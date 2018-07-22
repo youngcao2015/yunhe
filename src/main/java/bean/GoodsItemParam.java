@@ -1,11 +1,15 @@
-package entity;
+package bean;
+
+import entity.GoodsItem;
+
+import java.io.Serializable;
 
 /**
  * @descripthion:
  * @author: Young Cao
  * @date: 下午10:56 18/7/16
  */
-public class GoodsItemParam extends GoodsItem {
+public class GoodsItemParam extends GoodsItem implements Serializable {
     /**
      * 搜索文本
      */

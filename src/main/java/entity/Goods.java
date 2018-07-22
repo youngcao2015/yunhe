@@ -1,5 +1,6 @@
 package entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -8,7 +9,7 @@ import java.util.Date;
  * @author: Young Cao
  * @date: 下午6:13 18/7/8
  */
-public class Goods {
+public class Goods implements Serializable{
     private Long id;
     private String name;
     private Long categoryId;

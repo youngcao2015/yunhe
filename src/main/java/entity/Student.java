@@ -1,11 +1,13 @@
 package entity;
 
+import java.io.Serializable;
+
 /**
  * @descripthion:
  * @author: Young Cao
  * @date: 下午6:16 18/6/23
  */
-public class Student {
+public class Student implements Serializable {
     private Long id;
 
     private String name;

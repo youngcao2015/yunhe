@@ -1,5 +1,6 @@
 package service.impl;
 
+import bean.OrderParam;
 import entity.Order;
 import entity.OrderDetail;
 import mapper.OrderMapper;
@@ -20,43 +21,51 @@ public class OrderServiceImpl implements IOrderService {
     @Resource
     private OrderMapper orderMapper;
 
+
     @Override
-    public List<OrderDetail> findOrder(OrderDetail order) throws Exception {
-        return orderMapper.findOrder(order);
+    public List<OrderDetail> findOrder(OrderParam orderParam) throws Exception {
+        return orderMapper.findOrder(orderParam);
     }
 
     @Override
-    public int insertOrder(OrderDetail order) throws Exception {
-        return orderMapper.insertOrder(order);
+    public int insertOrder(OrderParam orderParam) throws Exception {
+        return orderMapper.insertOrder(orderParam);
     }
 
     @Override
-    public int updateOrder(OrderDetail order) throws Exception {
-        return orderMapper.updateOrder(order);
+    public int updateOrder(OrderParam orderParam) throws Exception {
+        return orderMapper.updateOrder(orderParam);
     }
 
     @Override
-    public int deleteOrder(OrderDetail order) throws Exception {
-        return orderMapper.deleteOrder(order);
+    public int deleteOrder(OrderParam orderParam) throws Exception {
+        return orderMapper.deleteOrder(orderParam);
     }
 
     @Override
-    public List<OrderDetail> findOrderList(List<OrderDetail> orders) throws Exception {
-        return orderMapper.findOrderList(orders);
+    public List<OrderDetail> findOrderList(List<OrderDetail> orderDetails) throws Exception {
+        return orderMapper.findOrderList(orderDetails);
     }
 
     @Override
-    public int insertOrderList(List<OrderDetail> orders) throws Exception {
-        return orderMapper.insertOrderList(orders);
+    public int insertOrderList(List<OrderDetail> orderDetails) throws Exception {
+        return orderMapper.insertOrderList(orderDetails);
     }
 
     @Override
-    public int updateOrderList(List<OrderDetail> orders) throws Exception {
-        return orderMapper.updateOrderList(orders);
+    public int insertOrderDetailList(List<OrderDetail> orderDetails) throws Exception {
+        return orderMapper.insertOrderDetailList(orderDetails);
     }
 
     @Override
-    public int deleteOrderList(List<OrderDetail> orders) throws Exception {
-        return orderMapper.deleteOrderList(orders);
+    public int updateOrderList(List<OrderDetail> orderDetails) throws Exception {
+        return orderMapper.updateOrderList(orderDetails);
     }
+
+    @Override
+    public int deleteOrderList(List<OrderDetail> orderDetails) throws Exception {
+        return orderMapper.deleteOrderList(orderDetails);
+    }
+
+
 }

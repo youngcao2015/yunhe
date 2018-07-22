@@ -3,6 +3,7 @@ package controller;
 import base.AppResult;
 import base.AppResultBuilder;
 import base.ResultStringUtil;
+import bean.GoodsItemParam;
 import entity.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

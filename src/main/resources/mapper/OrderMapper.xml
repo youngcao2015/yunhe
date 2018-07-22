@@ -12,7 +12,7 @@
         <result column="buyer_msg" property="buyerMsg"/>
     </resultMap>
 
-    <select id="findOrder" parameterType="entity.OrderDetail" resultMap="order">
+    <select id="findOrder" parameterType="bean.OrderParam" resultMap="order">
         SELECT o.discount_amount, o.state, o.type, od.*
         FROM yunhe.`order` o, yunhe.order_detail od
         <where>
@@ -23,16 +23,42 @@
         </where>
     </select>
 
-    <insert id="insertOrder" parameterType="entity.OrderDetail">
+    <insert id="insertOrder" parameterType="bean.OrderParam">
         INSERT INTO yunhe.`order` (user_id, number)
         VALUES (#{userId}, #{number});
 
         INSERT INTO order_detail (`count`, shipping_method, buyer_msg, goods_item_id, order_id, order_number,
                           price, discount_price, real_price, pic, support, `desc`)
-        (SELECT #{count}, #{support}, #{buyerMsg}, #{goodsItemId}, (SELECT id FROM yunhe.`order` ORDER BY id DESC LIMIT 0, 1),
+        (SELECT #{count}, #{shipping_method}, #{buyerMsg}, #{goodsItemId}, (SELECT id FROM yunhe.`order` ORDER BY id DESC LIMIT 0, 1),
          o.number, g.price, g.discount_price, g.discount_price - o.discount_amount, g.pic, (SELECT support FROM mall_goods WHERE mall_goods.id = g.goods_id), g.`desc`
          FROM yunhe.`order` o, yunhe.mall_goods_item g
          WHERE g.id = #{goodsItemId} AND o.id = (SELECT id FROM yunhe.`order` ORDER BY id DESC LIMIT 0, 1));
+    </insert>
+
+    <!--批量插入order表数据并返回相应主键-->
+    <insert id="insertOrderList" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO yunhe.`order` (user_id, number)
+        VALUES
+        <foreach collection="list" item="order" separator="," >
+            (#{order.userId}, #{order.number})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrderDetailList" parameterType="java.util.List">
+--         将订单号、订单id、用户留言等信息插入表中
+        INSERT INTO yunhe.`order_detail` (`count`, shipping_method, buyer_msg, goods_item_id, order_id, order_number)
+        VALUES
+        <foreach collection="list" item="order" separator="," >
+            (#{order.count}, #{order.shippingMethod}, #{order.buyerMsg}, #{order.goodsItemId}, #{order.id},
+            #{order.number})
+        </foreach>;
+
+--         更新表信息
+        UPDATE yunhe.order_detail od, yunhe.mall_goods_item g, yunhe.`order` o, yunhe.mall_goods gs
+        SET od.price = g.price, od.discount_price = g.discount_price,
+        od.real_price = g.discount_price - o.discount_amount, od.pic = g.pic,
+        od.support = gs.support, od.`desc` = g.`desc`
+        WHERE od.goods_item_id = g.id AND od.order_id = o.id AND g.goods_id = gs.id;
     </insert>
 
 </mapper>

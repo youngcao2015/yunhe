@@ -1,5 +1,8 @@
 package entity;
 
+import enumeration.LoginType;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -7,7 +10,7 @@ import java.util.Date;
  * @author: Young Cao
  * @date: 下午1:30 18/7/3
  */
-public class UserAuth {
+public class UserAuth implements Serializable {
     private Long id;
     private Long userId;
     private String username;

@@ -1,5 +1,6 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
  * @author: Young Cao
  * @date: 下午6:32 18/7/9
  */
-public class GoodsCatFeature {
+public class GoodsCatFeature implements Serializable {
     private Long id;
     private String name;
     private Boolean homeVisible;

@@ -1,5 +1,6 @@
 package entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -7,7 +8,7 @@ import java.math.BigDecimal;
  * @author: Young Cao
  * @date: 上午9:56 18/7/21
  */
-public class OrderDetail extends Order {
+public class OrderDetail extends Order implements Serializable {
     private Long id;
     private Long orderId;
     private Long goodsItemId;

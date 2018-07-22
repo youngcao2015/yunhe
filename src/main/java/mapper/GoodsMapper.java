@@ -1,5 +1,6 @@
 package mapper;
 
+import bean.GoodsItemParam;
 import entity.*;
 
 import java.util.List;

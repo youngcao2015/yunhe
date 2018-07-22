@@ -1,5 +1,6 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -7,7 +8,7 @@ import java.util.Date;
  * @author: Young Cao
  * @date: 上午9:55 18/7/21
  */
-public class Order {
+public class Order implements Serializable {
     private Long id;
     private Long userId;
     private String number;

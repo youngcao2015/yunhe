@@ -1,5 +1,6 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -7,7 +8,7 @@ import java.util.Date;
  * @author: Young Cao
  * @date: 下午11:07 18/7/2
  */
-public class User {
+public class User implements Serializable {
     private Long id;
     private Long phoneNum;
     private String username;
